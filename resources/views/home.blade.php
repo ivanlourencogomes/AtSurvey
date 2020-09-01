@@ -9,7 +9,7 @@
     <section class="experiments mt-4 mb-4 p-2">
         
         @foreach ($experiments as $experiment)
-        <a href="/experiment/{{$experiment->id}}">
+        <a href="/experiment/{{$experiment->id}}/edit">
         {{$experiment->experiment_name}}
         </a>
         <br>

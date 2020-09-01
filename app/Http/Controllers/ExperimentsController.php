@@ -17,8 +17,24 @@ class ExperimentsController extends Controller
         // Check ExperimentPolicy.php
         $this->authorize('view', $experiment);
 
-        return view('experiment',[
-            'experiment'=> $experiment,
-        ]);
+        return view('experiment', compact('experiment'));
     }
+
+    public function edit($experiment_id)
+    {
+        
+        $experiment = Experiment::find($experiment_id);
+        
+        // Only authorize if user is the owner of experiment.
+        // Check ExperimentPolicy.php
+        $this->authorize('update', $experiment);
+
+        return view('experiments.edit', compact('experiment'));
+    }
+
+    public function create()
+    {
+        return view('experiments.create');
+    }
+
 }
