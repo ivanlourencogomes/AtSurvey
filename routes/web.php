@@ -19,4 +19,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/experiment/{experimentID}', 'ExperimentsController@show')->name('experiment.show');
+Route::get('/experiment/{experiment_id}', 'ExperimentsController@show')->name('experiment.show');

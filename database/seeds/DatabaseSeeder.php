@@ -13,8 +13,17 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
+            'id' => 1,
             'name' => 'Ivan',
             'email' => 'ivanlgomes@yahoo.com.br',
+            'password' => bcrypt('12345678'),
+            'created_at' => date("Y-m-d H:i:s") 
+        ]);
+
+        DB::table('users')->insert([
+            'id' => 2,
+            'name' => 'Maria',
+            'email' => 'mclgomes@gmail.com',
             'password' => bcrypt('12345678'),
             'created_at' => date("Y-m-d H:i:s") 
         ]);
@@ -30,8 +39,23 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('experiments')->insert([
+            'id' => 1,
             'user_id_owner' => 1,
-            'experiment_name' => 'Demo Experiment 1',
+            'experiment_name' => 'Demo Experiment Ivan',
+            'is_public' => '0',
+            'is_active' => '1',
+            'welcome_text' => 'Welcome text goes here',
+            'consent_text' => 'Consent text goes here',
+            'consent_label' => 'Consent label',
+            'instructions_text' => 'Instructions text goes here',
+            'ending_text' => 'Ending text goes here',
+            'created_at' => date("Y-m-d H:i:s") 
+        ]);
+
+        DB::table('experiments')->insert([
+            'id' => 2,
+            'user_id_owner' => 2,
+            'experiment_name' => 'Demo Experiment Maria',
             'is_public' => '1',
             'is_active' => '1',
             'welcome_text' => 'Welcome text goes here',
