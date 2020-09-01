@@ -27,6 +27,8 @@ class CreatePersonalDataFormsFieldsTable extends Migration
 
             $table->json('options')->nullable();
 
+            $table->boolean('is_global')->default('0');
+
             $table->timestamps();
         });
     }

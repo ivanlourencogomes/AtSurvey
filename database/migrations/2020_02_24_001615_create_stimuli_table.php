@@ -14,10 +14,12 @@ class CreateStimuliTable extends Migration
     public function up()
     {
         Schema::create('stimuli', function (Blueprint $table) {
+            
+            $table->bigIncrements('id');
+            
             $table->unsignedBigInteger('stimuli_type_id');
             $table->unsignedBigInteger('user_id_owner');
 
-            $table->bigIncrements('id');
             $table->string('stimuli_name', 50)->nullable();
             
             $table->foreign('user_id_owner')
@@ -34,8 +36,10 @@ class CreateStimuliTable extends Migration
             $table->string('instruction_text', 200)->nullable();
 
             $table->string('item', 20)->nullable();
+            $table->string('item_id', 20)->nullable();
             $table->string('condition', 20)->nullable();
             $table->string('condition_code', 20)->nullable();
+            $table->integer('trial')->nullable();
             
 
             $table->timestamps();

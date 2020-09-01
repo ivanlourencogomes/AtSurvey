@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePersonalDataFormsTable extends Migration
+class CreateParticipantSessionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,16 @@ class CreatePersonalDataFormsTable extends Migration
      */
     public function up()
     {
-        Schema::create('personal_data_forms', function (Blueprint $table) {
+        Schema::create('participant_sessions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            
-            $table->unsignedBigInteger('owner_id');
+            $table->timestamps();
 
-            $table->string('description', 80);
+            $table->unsignedBigInteger('experiment_id');
 
-            $table->foreign('owner_id')
-                  ->references('id')->on('users')
+            $table->foreign('experiment_id')
+                  ->references('id')->on('experiments')
                   ->onDelete('cascade');
 
-            $table->timestamps();
         });
     }
 
@@ -35,6 +33,6 @@ class CreatePersonalDataFormsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('personal_data_forms');
+        Schema::dropIfExists('participant_sessions');
     }
 }

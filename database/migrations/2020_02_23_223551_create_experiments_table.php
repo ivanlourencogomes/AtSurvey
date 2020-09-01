@@ -14,9 +14,10 @@ class CreateExperimentsTable extends Migration
     public function up()
     {
         Schema::create('experiments', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id_owner');
             
             $table->bigIncrements('id');
+            
+            $table->unsignedBigInteger('user_id_owner');
             
             $table->foreign('user_id_owner')
                   ->references('id')->on('users')

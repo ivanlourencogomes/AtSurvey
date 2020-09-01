@@ -14,10 +14,9 @@ class CreateStimuliListsTable extends Migration
     public function up()
     {
         Schema::create('stimuli_lists', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id_owner');
             
             $table->bigIncrements('id');
-            
+            $table->unsignedBigInteger('user_id_owner');
             $table->foreign('user_id_owner')
                   ->references('id')->on('users')
                   ->onDelete('cascade');

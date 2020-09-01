@@ -14,7 +14,6 @@ class CreateAnswerFieldsInStimuliTable extends Migration
     public function up()
     {
         Schema::create('answer_fields_in_stimuli', function (Blueprint $table) {
-            $table->bigIncrements('id');
 
             $table->unsignedBigInteger('answer_field_id');
             $table->unsignedBigInteger('stimuli_id');
