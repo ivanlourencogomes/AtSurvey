@@ -27,11 +27,11 @@ class CreateExperimentsTable extends Migration
             $table->boolean('is_public')->default('0');
             $table->boolean('is_active')->default('0');
 
-            $table->string('welcome_text', 2000);
-            $table->string('consent_text', 2000);
-            $table->string('consent_label', 200);
-            $table->string('instructions_text', 2000);
-            $table->string('ending_text', 2000);
+            $table->string('welcome_text', 2000)->nullable();
+            $table->string('consent_text', 2000)->nullable();
+            $table->string('consent_label', 200)->nullable();
+            $table->string('instructions_text', 2000)->nullable();
+            $table->string('ending_text', 2000)->nullable();
 
             $table->timestamps();
         });

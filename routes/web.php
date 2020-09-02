@@ -19,7 +19,9 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/experiment/create', 'ExperimentsController@create');
+Route::get('/experiment/create', 'ExperimentsController@create')->middleware('auth');
+
+Route::post('/experiment', 'ExperimentsController@store')->middleware('auth');
 
 Route::get('/experiment/{experiment_id}', 'ExperimentsController@show')->name('experiment.show');
 

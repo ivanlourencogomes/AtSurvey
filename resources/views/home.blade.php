@@ -2,8 +2,10 @@
 
 @section('content')
 <div class="container">
-   
-    <button type="button">New experiment</button>
+    
+    <a href="/experiment/create">
+        <button type="button">New experiment</button>
+    </a>
 
 
     <section class="experiments mt-4 mb-4 p-2">

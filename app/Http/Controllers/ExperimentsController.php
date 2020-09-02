@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Auth;
 use App\Experiment;
 
 class ExperimentsController extends Controller
@@ -36,5 +37,26 @@ class ExperimentsController extends Controller
     {
         return view('experiments.create');
     }
+
+    public function store()
+    {
+        $data = request()->validate([
+            'experiment_name' => 'required',
+            'welcome_text' => '',
+            'consent_text' => '',
+            'consent_label' => '',
+            'instructions_text' => '',
+            'ending_text' => '',
+            'is_public' => ''
+        ]);
+
+        $data['is_active'] = 1;
+        
+        auth()->user()->experiment()->create($data);
+        
+        return redirect('/home');
+
+    }
+
 
 }
