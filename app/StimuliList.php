@@ -9,6 +9,6 @@ class StimuliList extends Model
     public function stimulis()
     {
         return $this->belongsToMany('App\Stimuli', 'stimuli_in_lists', 
-      'stimuli_id', 'list_id');
+      'list_id', 'stimuli_id');
     }
 }

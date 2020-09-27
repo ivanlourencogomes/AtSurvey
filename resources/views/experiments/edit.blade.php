@@ -197,11 +197,12 @@
 
     </form>
 
-    <section class="stimuli_lists col-md-6 mt-4">
+    <section class="stimuli_lists mt-4">
         <h2>Stimuli Lists</h2>
+        <hr>
         <div>
             @foreach ($stimuli_lists as $list)
-                <h3>{{$list->list_name}}</h3>
+                <h4 class="mt-4">{{$list->list_name}}</h3>
                 @foreach ($list->stimuli as $stimuli)
                     <li>
                         {{$stimuli->stimuli_text}}

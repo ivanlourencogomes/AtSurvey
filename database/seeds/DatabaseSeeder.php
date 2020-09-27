@@ -195,7 +195,33 @@ class DatabaseSeeder extends Seeder
             'id' => 1,
             'stimuli_type_id' => 1,
             'user_id_owner' => 1,
-            'stimuli_text' => 'The leaves wilted',
+            'stimuli_text' => 'A Ana escondeu o presente em cima da geladeira.',
+            'item' => 'Dist',
+            'item_id' => 'Exp',
+            'condition' => 'PB_lex-lex',
+            'condition_code' => 'PB_lex-lex-1',
+            'trial' => 1,
+            'created_at' => date("Y-m-d H:i:s") 
+        ]);
+
+        DB::table('stimuli')->insert([
+            'id' => 2,
+            'stimuli_type_id' => 1,
+            'user_id_owner' => 1,
+            'stimuli_text' => 'A menina estava a dormir na relva do parque.',
+            'item' => 'Dist',
+            'item_id' => 'Exp',
+            'condition' => 'PB_lex-lex',
+            'condition_code' => 'PB_lex-lex-1',
+            'trial' => 1,
+            'created_at' => date("Y-m-d H:i:s") 
+        ]);
+
+        DB::table('stimuli')->insert([
+            'id' => 3,
+            'stimuli_type_id' => 1,
+            'user_id_owner' => 1,
+            'stimuli_text' => 'Estou falando para vocês de sofisticação urbana.',
             'item' => 'Dist',
             'item_id' => 'Exp',
             'condition' => 'PB_lex-lex',
@@ -229,6 +255,16 @@ class DatabaseSeeder extends Seeder
             'created_at' => date("Y-m-d H:i:s") 
         ]);
 
+        DB::table('stimuli_lists')->insert([
+            'id' => 2,
+            'user_id_owner' => 1,
+            'list_name' => 'DEMO_Lista2',
+            'list_description' => 'List description goes here',
+            'is_public' => '0',
+            'stimuli_per_page' => 1,
+            'created_at' => date("Y-m-d H:i:s") 
+        ]);
+
         DB::table('stimuli_in_lists')->insert([
             'list_id' => 1,
             'stimuli_id' => 1,
@@ -236,8 +272,28 @@ class DatabaseSeeder extends Seeder
             'created_at' => date("Y-m-d H:i:s") 
         ]);
 
+        DB::table('stimuli_in_lists')->insert([
+            'list_id' => 1,
+            'stimuli_id' => 2,
+            'order' => 0,
+            'created_at' => date("Y-m-d H:i:s") 
+        ]);
+
+        DB::table('stimuli_in_lists')->insert([
+            'list_id' => 2,
+            'stimuli_id' => 3,
+            'order' => 0,
+            'created_at' => date("Y-m-d H:i:s") 
+        ]);
+
         DB::table('list_in_experiments')->insert([
             'stimuli_list_id' => 1,
+            'experiment_id' => 1,
+            'created_at' => date("Y-m-d H:i:s") 
+        ]);
+
+        DB::table('list_in_experiments')->insert([
+            'stimuli_list_id' => 2,
             'experiment_id' => 1,
             'created_at' => date("Y-m-d H:i:s") 
         ]);

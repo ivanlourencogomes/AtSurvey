@@ -16,7 +16,7 @@ class Experiment extends Model
     public function stimuli_lists()
     {
         return $this->belongsToMany('App\StimuliList', 'list_in_experiments', 
-      'experiment_id', 'stimuli_list_id');
+        'experiment_id', 'stimuli_list_id');
     }
 
 

@@ -34,14 +34,13 @@ class ExperimentsController extends Controller
         $stimuli_lists = array();
 
         foreach($stimuli_lists_raw as $list) {
+            
             $listWithStimuli = new ListWithStimuli;
             $listWithStimuli->list_name = $list->list_name; 
             $listWithStimuli->list_id = $list->id; 
-            $listWithStimuli->stimuli = StimuliList::find($list->id)->stimulis()->get();
+            $listWithStimuli->stimuli = $list->stimulis()->get();
             array_push($stimuli_lists, $listWithStimuli);
         }
-
-
 
         // Only authorize if user is the owner of experiment.
         // Check ExperimentPolicy.php

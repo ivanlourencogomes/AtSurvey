@@ -10884,3 +10884,7 @@ a.text-dark:focus {
   }
 }
 
+li {
+  list-style-type: none;
+}
+
