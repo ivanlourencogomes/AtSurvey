@@ -13,7 +13,7 @@ class CreateListInExperimentTable extends Migration
      */
     public function up()
     {
-        Schema::create('list_in_experiment', function (Blueprint $table) {
+        Schema::create('list_in_experiments', function (Blueprint $table) {
             
             $table->unsignedBigInteger('stimuli_list_id');
             $table->unsignedBigInteger('experiment_id');
@@ -40,6 +40,6 @@ class CreateListInExperimentTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('list_in_experiment');
+        Schema::dropIfExists('list_in_experiments');
     }
 }

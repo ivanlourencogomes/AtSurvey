@@ -6,9 +6,12 @@ use Illuminate\Http\Request;
 use App\User;
 use Auth;
 use App\Experiment;
+use App\ ListInExperiment;
+use Redirect;
 
 class ExperimentsController extends Controller
 {
+
     public function show($experiment_id)
     {
         
@@ -25,12 +28,13 @@ class ExperimentsController extends Controller
     {
         
         $experiment = Experiment::find($experiment_id);
-        
+        $stimuli_lists =  $experiment->stimuli_lists()->get();
+
         // Only authorize if user is the owner of experiment.
         // Check ExperimentPolicy.php
         $this->authorize('update', $experiment);
 
-        return view('experiments.edit', compact('experiment'));
+        return view('experiments.edit', compact('experiment','stimuli_lists'));
     }
 
     public function create()
@@ -50,12 +54,39 @@ class ExperimentsController extends Controller
             'is_public' => ''
         ]);
 
-        $data['is_active'] = 1;
+        $data['is_active'] = '1';
         
         auth()->user()->experiment()->create($data);
         
         return redirect('/home');
 
+    }
+
+    public function update(USER $user, $experiment_id)
+    {
+
+        $data = request()->validate([
+            'experiment_name' => 'required',
+            'welcome_text' => '',
+            'consent_text' => '',
+            'consent_label' => '',
+            'instructions_text' => '',
+            'ending_text' => '',
+            'is_public' => '',
+            'is_active' => ''
+        ]);
+        
+        
+        $exp = Experiment::find($experiment_id);
+        
+        foreach($data as $key => $value)
+        {   
+            $exp[$key] = $value; 
+        };
+
+        $exp->save();
+
+        return Redirect::back()->with('message','Changes saved successfully');
     }
 
 

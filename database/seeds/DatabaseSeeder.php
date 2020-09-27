@@ -236,7 +236,7 @@ class DatabaseSeeder extends Seeder
             'created_at' => date("Y-m-d H:i:s") 
         ]);
 
-        DB::table('list_in_experiment')->insert([
+        DB::table('list_in_experiments')->insert([
             'stimuli_list_id' => 1,
             'experiment_id' => 1,
             'created_at' => date("Y-m-d H:i:s") 

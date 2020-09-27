@@ -25,7 +25,7 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $experiments = $user->experiment()->get();
+        $experiments = $user->experiment()->orderBy('updated_at', 'desc')->get();
 
         return view('home', ['experiments' => $experiments]);
     }

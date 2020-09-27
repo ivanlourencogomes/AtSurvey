@@ -30,3 +30,18 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 const app = new Vue({
     el: '#app',
 });
+
+$(function(){
+
+    $("form input[type=checkbox]").click(function(){ 
+
+        if ($(this).attr("checked")) {
+            $(this).val("0");
+            $(this).removeAttr("checked");
+        } else {
+            $(this).val("1");
+            $(this).attr("checked", "checked");
+        }
+     });
+
+});

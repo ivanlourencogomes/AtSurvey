@@ -26,3 +26,5 @@ Route::post('/experiment', 'ExperimentsController@store')->middleware('auth');
 Route::get('/experiment/{experiment_id}', 'ExperimentsController@show')->name('experiment.show');
 
 Route::get('/experiment/{experiment_id}/edit', 'ExperimentsController@edit')->name('experiment.edit');
+
+Route::patch('/experiment/{experiment_id}', 'ExperimentsController@update')->name('experiment.update');

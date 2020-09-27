@@ -3,6 +3,12 @@
 @section('content')
 <div class="container">
    
+    <div class="row">
+        <a href="/home">
+            <button type="button" class="btn btn-link">< Back to Experiments</button>
+        </a>
+    </div>
+
     <div class="row col-md-6 offset-4 mb-4">
         <h1>Create new experiment</h1>
     </div>
@@ -17,7 +23,8 @@
                 <input 
                 id="experiment_name" 
                 type="text" 
-                class="form-control @error('experiment_name') is-invalid @enderror" 
+                class="form-control @error('experiment_name') is-invalid @enderror"
+                value="{{ old('experiment_name') }}" 
                 name="experiment_name" 
                 
                 autocomplete="experiment_name" 
@@ -40,7 +47,7 @@
                 id="welcome_text"  
                 class="form-control @error('welcome_text') is-invalid @enderror" 
                 name="welcome_text"
-                >
+                >{{ old('welcome_text') }}
                 </textarea>
 
                 @error('welcome_text')
@@ -61,7 +68,7 @@
                 id="consent_text"  
                 class="form-control @error('consent_text') is-invalid @enderror" 
                 name="consent_text"
-                >
+                >{{ old('consent_text') }}
                 </textarea>
 
                 @error('consent_text')
@@ -83,6 +90,7 @@
                 class="form-control @error('consent_label') is-invalid @enderror" 
                 name="consent_label" 
                 placeholder="Ex: I agree"
+                value="{{ old('consent_label')}}"
                 >
 
                 @error('consent_label')
@@ -103,7 +111,7 @@
                 id="instructions_text"  
                 class="form-control @error('instructions_text') is-invalid @enderror" 
                 name="instructions_text"
-                >
+                >{{ old('instructions_text') }}
                 </textarea>
 
                 @error('instructions_text')
@@ -124,7 +132,7 @@
                 id="ending_text"  
                 class="form-control @error('ending_text') is-invalid @enderror" 
                 name="ending_text"
-                >
+                >{{ old('ending_text') }}
                 </textarea>
 
                 @error('ending_text')
