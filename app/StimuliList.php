@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class StimuliList extends Model
 {
-    public function list_in_experiment()
+    public function stimulis()
     {
-        return $this->hasMany('App\ListInExperiment', 'stimuli_list_id');
+        return $this->belongsToMany('App\Stimuli', 'stimuli_in_lists', 
+      'stimuli_id', 'list_id');
     }
 }

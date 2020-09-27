@@ -197,12 +197,18 @@
 
     </form>
 
-    <section class="stimuli_lists">
-        <ul>
-        @foreach ($stimuli_lists as $list)
-            <li>{{$list->list_name}}</li>
-        @endforeach
-        </ul>
+    <section class="stimuli_lists col-md-6 mt-4">
+        <h2>Stimuli Lists</h2>
+        <div>
+            @foreach ($stimuli_lists as $list)
+                <h3>{{$list->list_name}}</h3>
+                @foreach ($list->stimuli as $stimuli)
+                    <li>
+                        {{$stimuli->stimuli_text}}
+                    </li>
+                @endforeach
+            @endforeach
+        </div>
     </section>
 
 </div>

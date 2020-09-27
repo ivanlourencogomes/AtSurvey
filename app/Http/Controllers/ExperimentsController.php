@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\User;
 use Auth;
 use App\Experiment;
-use App\ ListInExperiment;
+use App\StimuliList;
+use App\ListInExperiment;
+use App\CustomClass\ListWithStimuli;
 use Redirect;
 
 class ExperimentsController extends Controller
@@ -28,7 +30,18 @@ class ExperimentsController extends Controller
     {
         
         $experiment = Experiment::find($experiment_id);
-        $stimuli_lists =  $experiment->stimuli_lists()->get();
+        $stimuli_lists_raw =  $experiment->stimuli_lists()->get();
+        $stimuli_lists = array();
+
+        foreach($stimuli_lists_raw as $list) {
+            $listWithStimuli = new ListWithStimuli;
+            $listWithStimuli->list_name = $list->list_name; 
+            $listWithStimuli->list_id = $list->id; 
+            $listWithStimuli->stimuli = StimuliList::find($list->id)->stimulis()->get();
+            array_push($stimuli_lists, $listWithStimuli);
+        }
+
+
 
         // Only authorize if user is the owner of experiment.
         // Check ExperimentPolicy.php
