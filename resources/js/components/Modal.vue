@@ -1,13 +1,18 @@
 <template>
     <transition name="slide-fade" appear>
         <div class="modal-wrapper" @click="$emit('close-modal')" >
+            
             <div class="modal-body" @click.stop>
                     <button type="button" class="close" aria-label="Close" @click="$emit('close-modal')">
                         <span aria-hidden="true">&times;</span>
                     </button>
 
+                    <div class="modal-header p-0">
+                        <slot name="header"></slot>
+                    </div>
+
                     <div class="modal-content">
-                        <slot></slot>
+                        <slot name="content"></slot>
                     </div>
             </div>
         </div>
@@ -48,13 +53,18 @@
             position: fixed;
             z-index: 101;
             background-color: #FFF;
-            width: 600px;
+            width: 900px;
             max-width: 100%;
             height: 80vh;
             cursor: initial;
+            padding: 50px 25px;
 
             button.close {
                 outline: none;
+                position: absolute;
+                right: 12px;
+                top: 6px;
+                z-index: 102;
             }
 
             .modal-content {

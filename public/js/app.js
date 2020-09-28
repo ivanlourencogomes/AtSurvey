@@ -1924,6 +1924,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {//$("body").addClass("no-overflow");
   },
@@ -1942,6 +1947,35 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -6513,7 +6547,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".modal-wrapper {\n  position: fixed;\n  z-index: 100;\n  width: 100%;\n  height: 100vh;\n  top: 0;\n  left: 0;\n  background-color: rgba(0, 0, 0, 0.5);\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  cursor: pointer;\n}\n.modal-wrapper .modal-body {\n  position: fixed;\n  z-index: 101;\n  background-color: #FFF;\n  width: 600px;\n  max-width: 100%;\n  height: 80vh;\n  cursor: initial;\n}\n.modal-wrapper .modal-body button.close {\n  outline: none;\n}\n.modal-wrapper .modal-body .modal-content {\n  border: none;\n}\n.slide-fade-enter-active {\n  transition: all 0.3s ease;\n}\n.slide-fade-leave-active {\n  transition: all 0.4s cubic-bezier(1, 0.5, 0.8, 1);\n}\n.slide-fade-enter, .slide-fade-leave-to {\n  opacity: 0;\n}", ""]);
+exports.push([module.i, ".modal-wrapper {\n  position: fixed;\n  z-index: 100;\n  width: 100%;\n  height: 100vh;\n  top: 0;\n  left: 0;\n  background-color: rgba(0, 0, 0, 0.5);\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  cursor: pointer;\n}\n.modal-wrapper .modal-body {\n  position: fixed;\n  z-index: 101;\n  background-color: #FFF;\n  width: 900px;\n  max-width: 100%;\n  height: 80vh;\n  cursor: initial;\n  padding: 50px 25px;\n}\n.modal-wrapper .modal-body button.close {\n  outline: none;\n  position: absolute;\n  right: 12px;\n  top: 6px;\n  z-index: 102;\n}\n.modal-wrapper .modal-body .modal-content {\n  border: none;\n}\n.slide-fade-enter-active {\n  transition: all 0.3s ease;\n}\n.slide-fade-leave-active {\n  transition: all 0.4s cubic-bezier(1, 0.5, 0.8, 1);\n}\n.slide-fade-enter, .slide-fade-leave-to {\n  opacity: 0;\n}", ""]);
 
 // exports
 
@@ -38071,7 +38105,14 @@ var render = function() {
               [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
             ),
             _vm._v(" "),
-            _c("div", { staticClass: "modal-content" }, [_vm._t("default")], 2)
+            _c(
+              "div",
+              { staticClass: "modal-header p-0" },
+              [_vm._t("header")],
+              2
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-content" }, [_vm._t("content")], 2)
           ]
         )
       ]
@@ -38132,7 +38173,67 @@ var render = function() {
                 }
               }
             },
-            [_vm._v("\n        lalala\n    ")]
+            [
+              _c("div", { attrs: { slot: "header" }, slot: "header" }, [
+                _c("h4", { staticClass: "mb-3" }, [
+                  _vm._v(_vm._s(_vm.stimuliList.list_info.list_name))
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "table",
+                {
+                  staticClass: "table table-hover",
+                  attrs: { slot: "content" },
+                  slot: "content"
+                },
+                [
+                  _c("thead", [
+                    _c("tr", [
+                      _c("th", [_vm._v("Stimuli text")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("Trial")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("Item")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("Item Id")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("Condition")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("Condition Code")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("Instruction Text")])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.stimuliList.stimuli, function(stimuli) {
+                      return _c("tr", { key: stimuli.id }, [
+                        _c("td", [_vm._v(_vm._s(stimuli.stimuli_text || ""))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(stimuli.trial || ""))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(stimuli.item || ""))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(stimuli.item_id || ""))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(stimuli.condition || ""))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(_vm._s(stimuli.condition_code || ""))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(_vm._s(stimuli.instruction_text || ""))
+                        ])
+                      ])
+                    }),
+                    0
+                  )
+                ]
+              )
+            ]
           )
         : _vm._e()
     ],
