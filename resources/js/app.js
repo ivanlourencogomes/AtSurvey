@@ -19,7 +19,9 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+
+Vue.component('modal', require('./components/Modal.vue').default);
+Vue.component('editStimuliList', require('./components/experiments/EditStimuliList.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -33,7 +35,7 @@ const app = new Vue({
 
 $(function(){
 
-    $("form input[type=checkbox]").click(function(){ 
+    $("form input[type=checkbox]").on("click", function(){ 
 
         if ($(this).attr("checked")) {
             $(this).val("0");

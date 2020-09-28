@@ -36,8 +36,7 @@ class ExperimentsController extends Controller
         foreach($stimuli_lists_raw as $list) {
             
             $listWithStimuli = new ListWithStimuli;
-            $listWithStimuli->list_name = $list->list_name; 
-            $listWithStimuli->list_id = $list->id; 
+            $listWithStimuli->list_info = $list; 
             $listWithStimuli->stimuli = $list->stimulis()->get();
             array_push($stimuli_lists, $listWithStimuli);
         }

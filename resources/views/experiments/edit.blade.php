@@ -200,9 +200,10 @@
     <section class="stimuli_lists mt-4">
         <h2>Stimuli Lists</h2>
         <hr>
+        
         <div>
             @foreach ($stimuli_lists as $list)
-                <h4 class="mt-4">{{$list->list_name}}</h3>
+                <h4 class="mt-4">{{$list->list_info->list_name}} <edit-stimuli-list :list="{{ json_encode($list) }}" /> </h4>
                 @foreach ($list->stimuli as $stimuli)
                     <li>
                         {{$stimuli->stimuli_text}}
