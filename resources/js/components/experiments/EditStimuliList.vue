@@ -6,7 +6,7 @@
         <button type="button" class="btn btn-link">Delete</button>
 
         <modal v-if="showEditModal" v-on:close-modal="showEditModal = false">
-
+            lalala
         </modal>
 
     </div>

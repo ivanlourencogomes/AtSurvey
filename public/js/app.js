@@ -1920,12 +1920,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    $("body").addClass("no-overflow");
+  mounted: function mounted() {//$("body").addClass("no-overflow");
   },
-  destroyed: function destroyed() {
-    $("body").removeClass("no-overflow");
+  destroyed: function destroyed() {//$("body").removeClass("no-overflow");
   }
 });
 
@@ -6511,7 +6513,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".modal-wrapper {\n  position: fixed;\n  z-index: 100;\n  width: 100%;\n  height: 100vh;\n  top: 0;\n  left: 0;\n  background-color: rgba(0, 0, 0, 0.5);\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  cursor: pointer;\n}\n.modal-wrapper .modal-body {\n  position: fixed;\n  z-index: 101;\n  background-color: #FFF;\n  width: 600px;\n  max-width: 100%;\n  height: 80vh;\n  cursor: initial;\n}\n.modal-wrapper .modal-body button.close {\n  outline: none;\n}", ""]);
+exports.push([module.i, ".modal-wrapper {\n  position: fixed;\n  z-index: 100;\n  width: 100%;\n  height: 100vh;\n  top: 0;\n  left: 0;\n  background-color: rgba(0, 0, 0, 0.5);\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  cursor: pointer;\n}\n.modal-wrapper .modal-body {\n  position: fixed;\n  z-index: 101;\n  background-color: #FFF;\n  width: 600px;\n  max-width: 100%;\n  height: 80vh;\n  cursor: initial;\n}\n.modal-wrapper .modal-body button.close {\n  outline: none;\n}\n.modal-wrapper .modal-body .modal-content {\n  border: none;\n}\n.slide-fade-enter-active {\n  transition: all 0.3s ease;\n}\n.slide-fade-leave-active {\n  transition: all 0.4s cubic-bezier(1, 0.5, 0.8, 1);\n}\n.slide-fade-enter, .slide-fade-leave-to {\n  opacity: 0;\n}", ""]);
 
 // exports
 
@@ -38032,45 +38034,49 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticClass: "modal-wrapper",
-      on: {
-        click: function($event) {
-          return _vm.$emit("close-modal")
-        }
-      }
-    },
-    [
-      _c(
-        "div",
-        {
-          staticClass: "modal-body",
-          on: {
-            click: function($event) {
-              $event.stopPropagation()
-            }
+  return _c("transition", { attrs: { name: "slide-fade", appear: "" } }, [
+    _c(
+      "div",
+      {
+        staticClass: "modal-wrapper",
+        on: {
+          click: function($event) {
+            return _vm.$emit("close-modal")
           }
-        },
-        [
-          _c(
-            "button",
-            {
-              staticClass: "close",
-              attrs: { type: "button", "aria-label": "Close" },
-              on: {
-                click: function($event) {
-                  return _vm.$emit("close-modal")
-                }
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-body",
+            on: {
+              click: function($event) {
+                $event.stopPropagation()
               }
-            },
-            [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-          )
-        ]
-      )
-    ]
-  )
+            }
+          },
+          [
+            _c(
+              "button",
+              {
+                staticClass: "close",
+                attrs: { type: "button", "aria-label": "Close" },
+                on: {
+                  click: function($event) {
+                    return _vm.$emit("close-modal")
+                  }
+                }
+              },
+              [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-content" }, [_vm._t("default")], 2)
+          ]
+        )
+      ]
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -38117,13 +38123,17 @@ var render = function() {
       ]),
       _vm._v(" "),
       _vm.showEditModal
-        ? _c("modal", {
-            on: {
-              "close-modal": function($event) {
-                _vm.showEditModal = false
+        ? _c(
+            "modal",
+            {
+              on: {
+                "close-modal": function($event) {
+                  _vm.showEditModal = false
+                }
               }
-            }
-          })
+            },
+            [_vm._v("\n        lalala\n    ")]
+          )
         : _vm._e()
     ],
     1

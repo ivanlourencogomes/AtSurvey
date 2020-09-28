@@ -1,24 +1,28 @@
 <template>
+    <transition name="slide-fade" appear>
+        <div class="modal-wrapper" @click="$emit('close-modal')" >
+            <div class="modal-body" @click.stop>
+                    <button type="button" class="close" aria-label="Close" @click="$emit('close-modal')">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
 
-    <div class="modal-wrapper" @click="$emit('close-modal')" >
-        <div class="modal-body" @click.stop>
-                <button type="button" class="close" aria-label="Close" @click="$emit('close-modal')">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                    <div class="modal-content">
+                        <slot></slot>
+                    </div>
+            </div>
         </div>
-    </div>
-    
+    </transition>
 </template>
 
 <script>
     export default {
      
         mounted() {
-            $("body").addClass("no-overflow");
+            //$("body").addClass("no-overflow");
 
         },
         destroyed() {
-            $("body").removeClass("no-overflow");
+            //$("body").removeClass("no-overflow");
 
         }
     }
@@ -52,7 +56,22 @@
             button.close {
                 outline: none;
             }
+
+            .modal-content {
+                border: none;
+            }
         }
+    }
+
+    .slide-fade-enter-active {
+        transition: all .3s ease;
+    }
+    .slide-fade-leave-active {
+        transition: all .4s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    }
+
+    .slide-fade-enter, .slide-fade-leave-to  {
+        opacity: 0;
     }
 
 </style>
