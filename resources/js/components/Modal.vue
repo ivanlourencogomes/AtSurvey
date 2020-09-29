@@ -53,8 +53,8 @@
             position: fixed;
             z-index: 101;
             background-color: #FFF;
-            width: 900px;
-            max-width: 100%;
+            width: 1440px;
+            max-width: 95%;
             height: 80vh;
             cursor: initial;
             padding: 50px 25px;
@@ -69,6 +69,7 @@
 
             .modal-content {
                 border: none;
+                padding: 24px 0;
             }
         }
     }

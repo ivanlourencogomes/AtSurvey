@@ -6,10 +6,24 @@
         <button type="button" class="btn btn-link">Delete</button>
 
         <modal v-if="showEditModal" v-on:close-modal="showEditModal = false">
+            
             <div slot="header">
                 <h4 class="mb-3">{{stimuliList.list_info.list_name}}</h4>
             </div>
-            <table slot="content" class="table table-hover">
+
+           <div slot="content">
+                 <vue-excel-editor v-model="stimuliList.stimuli">
+                    <vue-excel-column field="stimuli_text"   label="Stimuli Text" />
+                    <vue-excel-column field="condition"   label="Condition" />
+                    <vue-excel-column field="condition_code"   label="Condition Code" />
+                    <vue-excel-column field="item"   label="Item" />
+                    <vue-excel-column field="item_id"   label="Item Id" />
+                    <vue-excel-column field="trial"   label="Trial" />
+                </vue-excel-editor>
+            </div>
+
+            <!-- <table slot="content" class="table table-hover">
+                
                 <thead>
                     <tr>
                         <th>Stimuli text</th>
@@ -19,7 +33,7 @@
                         <th>Condition</th>
                         <th>Condition Code</th>
                         <th>Instruction Text</th>
-                        <!-- <th>Last modified</th> -->
+                        <th>Last modified</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,11 +45,11 @@
                         <td>{{stimuli.condition || ''}}</td>
                         <td>{{stimuli.condition_code || ''}}</td>
                         <td>{{stimuli.instruction_text || ''}}</td>
-                        <!-- <th>{{stimuli.updated_at ? stimuli.updated_at : stimuli.created_at}}</th> -->
+                        <th>{{stimuli.updated_at ? stimuli.updated_at : stimuli.created_at}}</th>
                     </tr>
                 </tbody>
 
-            </table>
+            </table> -->
         </modal>
 
     </div>

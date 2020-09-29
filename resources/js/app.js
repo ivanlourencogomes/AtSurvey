@@ -6,6 +6,7 @@
 
 require('./bootstrap');
 
+
 window.Vue = require('vue');
 
 /**
@@ -22,6 +23,9 @@ window.Vue = require('vue');
 
 Vue.component('modal', require('./components/Modal.vue').default);
 Vue.component('editStimuliList', require('./components/experiments/EditStimuliList.vue').default);
+
+import VueExcelEditor from 'vue-excel-editor'
+Vue.use(VueExcelEditor)
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
