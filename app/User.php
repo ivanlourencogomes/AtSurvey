@@ -41,4 +41,10 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Experiment', 'user_id_owner');
     }
+
+    public function stimuli()
+    {
+        return $this->hasMany('App\Stimuli', 'user_id_owner');
+    }
+
 }

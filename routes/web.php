@@ -28,3 +28,6 @@ Route::get('/experiment/{experiment_id}', 'ExperimentsController@show')->name('e
 Route::get('/experiment/{experiment_id}/edit', 'ExperimentsController@edit')->name('experiment.edit');
 
 Route::patch('/experiment/{experiment_id}', 'ExperimentsController@update')->name('experiment.update');
+
+Route::post('/stimuli', 'StimulisController@store')->middleware('auth');
+

@@ -26,6 +26,9 @@ Vue.component('editStimuliList', require('./components/experiments/EditStimuliLi
 
 import VueExcelEditor from 'vue-excel-editor'
 Vue.use(VueExcelEditor)
+// https://www.npmjs.com/package/vue-excel-editor
+
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

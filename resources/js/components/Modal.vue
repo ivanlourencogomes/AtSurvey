@@ -23,11 +23,11 @@
     export default {
      
         mounted() {
-            //$("body").addClass("no-overflow");
+            $("body").addClass("no-overflow");
 
         },
         destroyed() {
-            //$("body").removeClass("no-overflow");
+            $("body").removeClass("no-overflow");
 
         }
     }
@@ -58,6 +58,7 @@
             height: 80vh;
             cursor: initial;
             padding: 50px 25px;
+            overflow: auto;
 
             button.close {
                 outline: none;
