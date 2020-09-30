@@ -12,7 +12,7 @@
             </div>
 
            <div slot="content">
-                 <vue-excel-editor v-model="stimuliList.stimuli" new-if-bottom autocomplete no-footer multi-update>
+                 <vue-excel-editor v-if="stimuliList.stimuli" v-model="stimuliList.stimuli" new-if-bottom autocomplete no-footer multi-update enterToSouth>
                     <vue-excel-column field="stimuli_text"   label="Stimuli Text" width="400px" />
                     <vue-excel-column field="condition"   label="Condition" />
                     <vue-excel-column field="condition_code"   label="Condition Code" />
@@ -42,26 +42,23 @@
             };
         },
         mounted() {
-            $(".vue-excel-editor").bind('paste', function(e) {
-                console.log(e);
-            });
+            
         },
         methods: {
             updateStimuliList() {
 
-                let stList = {}
+                let stimList = {}
                 
-                stList.list_info = this.stimuliList.list_info;
+                stimList.list_info = this.stimuliList.list_info;
 
-                stList.stimuli = this.stimuliList.stimuli;
-                stList.toDelete = [];
+                stimList.stimuli = this.stimuliList.stimuli;
+                stimList.toDelete = [];
+                let indexDeleted = [];
 
-                stList.stimuli.forEach(function(item,index){
+                stimList.stimuli.forEach(function(item,index){
                     if (item.id) 
-                        stList.toDelete.push(item.id)
-                    if (!item.stimuli_text) 
-                        stList.stimuli.splice(index, 1);
-
+                        stimList.toDelete.push(item.id)
+                        
                     delete item.$id;
                     delete item.id;
                     delete item.created_at;
@@ -69,18 +66,24 @@
                     delete item.updated_at;
                     delete item.user_id_owner;
                     item.stimuli_type_id = '1';
+
+                    if (!item.stimuli_text) 
+                        indexDeleted.push(index) 
                 });
+
+                for (var i = indexDeleted.length -1; i >= 0; i--)
+                    stimList.stimuli.splice(indexDeleted[i],1);
                 
-                console.log('stList', stList);
+                const _this = this;
 
                 axios.post(
                     '/stimuli', {
-                        data: stList,
+                        data: stimList,
                         _method: 'POST',
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                     }
                 ).then(function (response) {
-                    console.log(response);
+                    _this.stimuliList.stimuli = response.data;
                 })
                 .catch(function (error) {
                     console.log(error);            

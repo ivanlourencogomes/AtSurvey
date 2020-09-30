@@ -11,6 +11,8 @@ use Redirect;
 class StimuliListsController extends Controller
 {
 
+    
+
     public function store()
     {
         // $data = request()->validate([

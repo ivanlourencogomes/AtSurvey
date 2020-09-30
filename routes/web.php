@@ -31,3 +31,5 @@ Route::patch('/experiment/{experiment_id}', 'ExperimentsController@update')->nam
 
 Route::post('/stimuli', 'StimulisController@store')->middleware('auth');
 
+Route::post('/stimuli/get_from_list', 'StimulisController@show_stimuli_of_list')->middleware('auth');
+

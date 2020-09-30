@@ -11,6 +11,12 @@ use Redirect;
 class StimulisController extends Controller
 {
 
+    public function show_stimuli_of_list(Request $request) {
+        $list = $StimuliList::find($request->data['list_id']);
+        $stimuli = $list->stimulis();
+        return $stimuli;
+    }
+
     public function store(Request $request)
     {
         $stimuli = $request->data['stimuli'];
@@ -38,7 +44,10 @@ class StimulisController extends Controller
 
         $list->stimulis()->attach($records, ['order' => '0']);
         
-        return 'success';
+        $updatedStimuli = $list->stimulis()->get();
+        
+        return $updatedStimuli;
+
 
     }
 
