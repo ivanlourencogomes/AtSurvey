@@ -7,12 +7,63 @@
 
         <modal v-if="showEditModal" v-on:close-modal="showEditModal = false">
             
-            <div slot="header">
-                <h4 class="mb-3">{{stimuliList.list_info.list_name}}</h4>
+            <div slot="header" class="header-area pb-4 w-100">
+                <h4 class="mb-3">
+                    <input 
+                        id="list_name" 
+                        v-model="stimuliList.list_info.list_name"
+                        type="text" 
+                        class="form-control border-bottom-only pl-0" 
+                        name="list_name" 
+                        autofocus>
+                        <span class="expand" @click="expandListInfo()"></span>
+                </h4>
+                <div class="expansible">
+                            
+                    <label for="list_description" class="col-form-label">List Description</label>
+
+                    <div class="">
+                        <textarea 
+                        id="list_description"  
+                        class="form-control" 
+                        name="list_description"
+                        v-model="stimuliList.list_info.list_description">
+                        </textarea>
+                        
+                    </div>
+                    
+                    <label for="list_description" class="col-form-label">Stimuli per Page</label>
+
+                    <div>
+                        <input 
+                        id="stimuli_per_page" 
+                        v-model="stimuliList.list_info.stimuli_per_page"
+                        type="number" 
+                        class="form-control" 
+                        name="stimuli_per_page" 
+                        autofocus>
+                    </div>
+
+                   
+                    <div> 
+                        <input 
+                        type="checkbox" 
+                        id="is_public" 
+                        class="mr-1"
+                        name="is_public" 
+                        v-bind:true-value="1"
+                        v-bind:false-value="0"
+                        v-model="stimuliList.list_info.is_public"
+                        value="stimuliList.list_info.is_public">
+                         <label class="col-form-label" for="is_public">Make this list public</label>
+                    </div>
+
+
+                </div>
             </div>
 
            <div slot="content">
-                 <vue-excel-editor v-if="stimuliList.stimuli" v-model="stimuliList.stimuli" new-if-bottom autocomplete no-footer multi-update enterToSouth>
+                 <vue-excel-editor @update="onDataChange" v-if="stimuliList.stimuli" v-model="stimuliList.stimuli" new-if-bottom autocomplete no-footer multi-update enterToSouth>
                     <vue-excel-column field="stimuli_text"   label="Stimuli Text" width="400px" />
                     <vue-excel-column field="condition"   label="Condition" />
                     <vue-excel-column field="condition_code"   label="Condition Code" />
@@ -21,7 +72,7 @@
                     <vue-excel-column field="trial"   label="Trial" />
                 </vue-excel-editor>
 
-                <button @click="updateStimuliList" class="d-block btn btn-primary mt-4">Save</button>
+                <button :disabled="!listChanged" @click="updateStimuliList" class="px-4 d-block btn btn-primary mt-4">Save</button>
             </div>
 
             
@@ -38,11 +89,22 @@
         data: function() {
             return {
                 stimuliList: this.list,
-                showEditModal: false
+                showEditModal: false,
+                listChanged: false
             };
         },
         mounted() {
-            
+            if(!this.stimuliList.stimuli.length) {
+                this.stimuliList.stimuli = [{
+                    condition: "",
+                    condition_code: "",
+                    item: "",
+                    item_id: "",
+                    stimuli_text: "",
+                    stimuli_type_id: "",
+                    trial: ""
+                }];
+            }
         },
         methods: {
             updateStimuliList() {
@@ -84,10 +146,35 @@
                     }
                 ).then(function (response) {
                     _this.stimuliList.stimuli = response.data;
+                    
+                    
+                    if(!_this.stimuliList.stimuli.length) {
+                        _this.stimuliList.stimuli = [{
+                            condition: "",
+                            condition_code: "",
+                            item: "",
+                            item_id: "",
+                            stimuli_text: "",
+                            stimuli_type_id: "",
+                            trial: ""
+                        }];
+                    }
+
+                    _this.listChanged = false;
                 })
                 .catch(function (error) {
                     console.log(error);            
                 });
+            },
+
+            onDataChange (records) {
+                this.listChanged = true;
+            },
+
+            expandListInfo() {
+                $(".expansible").slideToggle();
+                $(".modal-header h4 .expand").toggleClass("rotate");
+                $(".modal-header .header-area ").toggleClass("border-bottom");
             }
         }
     }
@@ -111,6 +198,53 @@
                 td {
                     white-space: normal;
                 }
+            }
+        }
+
+        .modal-body {
+            
+            .modal-header {
+                border: none;
+            }
+
+            h4 {
+                display: flex;
+                align-items: center;
+
+                input {
+                    font-size: 1.35rem;
+                    color: black;
+                }
+
+                .expand {
+                    display: inline-block;
+                    width: 20px;
+                    height: 20px;
+                    background-image: url('/images/down-arrow.png');
+                    background-size: contain;
+                    opacity: 0.8;
+                    cursor: pointer;
+                    transition: 0.4s;
+                    position: absolute;
+                    right: 30px;
+
+                    &.rotate {
+                        transform: rotate(180deg);
+                        transition: 0.4s;
+                    }
+                }
+            }
+            
+
+            .expansible {
+                width: 400px;
+                max-width: 100%;
+                display: none;
+
+                input, textarea {
+                    margin-bottom: 8px;
+                }
+
             }
         }
     }
