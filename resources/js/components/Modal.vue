@@ -53,7 +53,7 @@
             position: fixed;
             z-index: 101;
             background-color: #FFF;
-            width: 1440px;
+            width: 1180px;
             max-width: 95%;
             height: 80vh;
             cursor: initial;

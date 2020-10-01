@@ -31,6 +31,14 @@ class StimulisController extends Controller
         }
         
         $list =  StimuliList::find($request->data['list_info']['id']);
+
+        if($list) {
+            $list->list_name = $request->data['list_info']['list_name'];
+            $list->list_description = $request->data['list_info']['list_description'];
+            $list->stimuli_per_page = $request->data['list_info']['stimuli_per_page'];
+            $list->is_public = $request->data['list_info']['is_public'];
+            $list->save();
+        }
         
         auth()->user()->stimuli()->whereIn('id', $request->data['toDelete'])->delete();
 

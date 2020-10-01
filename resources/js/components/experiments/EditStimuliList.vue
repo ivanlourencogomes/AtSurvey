@@ -10,6 +10,7 @@
             <div slot="header" class="header-area pb-4 w-100">
                 <h4 class="mb-3">
                     <input 
+                        @change="onDataChange()"
                         id="list_name" 
                         v-model="stimuliList.list_info.list_name"
                         type="text" 
@@ -24,6 +25,7 @@
 
                     <div class="">
                         <textarea 
+                        @change="onDataChange()"
                         id="list_description"  
                         class="form-control" 
                         name="list_description"
@@ -36,6 +38,7 @@
 
                     <div>
                         <input 
+                        @change="onDataChange()"
                         id="stimuli_per_page" 
                         v-model="stimuliList.list_info.stimuli_per_page"
                         type="number" 
@@ -47,6 +50,7 @@
                    
                     <div> 
                         <input 
+                        @change="onDataChange()"
                         type="checkbox" 
                         id="is_public" 
                         class="mr-1"
@@ -167,7 +171,7 @@
                 });
             },
 
-            onDataChange (records) {
+            onDataChange () {
                 this.listChanged = true;
             },
 
