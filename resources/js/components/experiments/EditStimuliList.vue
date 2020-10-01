@@ -7,7 +7,7 @@
 
         <modal v-if="showEditModal" v-on:close-modal="showEditModal = false">
             
-            <div slot="header" class="header-area pb-4 w-100">
+            <div slot="header" class="header-area w-100 expansible-parent">
                 <h4 class="mb-3">
                     <input 
                         @change="onDataChange()"
@@ -17,7 +17,7 @@
                         class="form-control border-bottom-only pl-0" 
                         name="list_name" 
                         autofocus>
-                        <span class="expand" @click="expandListInfo()"></span>
+                        <span class="expand" @click="expandListInfo($event)"></span>
                 </h4>
                 <div class="expansible">
                             
@@ -66,8 +66,16 @@
                 </div>
             </div>
 
+           
+
            <div slot="content">
-                 <vue-excel-editor @update="onDataChange" v-if="stimuliList.stimuli" v-model="stimuliList.stimuli" new-if-bottom autocomplete no-footer multi-update enterToSouth>
+
+                <div class="view-filter">
+                    <span class="card selected"></span>
+                    <span class="list"></span>
+                </div>
+
+                 <vue-excel-editor @update="onDataChange" v-if="stimuliList.stimuli && false" v-model="stimuliList.stimuli" new-if-bottom autocomplete no-footer multi-update enterToSouth>
                     <vue-excel-column field="stimuli_text"   label="Stimuli Text" width="400px" />
                     <vue-excel-column field="condition"   label="Condition" />
                     <vue-excel-column field="condition_code"   label="Condition Code" />
@@ -75,6 +83,52 @@
                     <vue-excel-column field="item_id"   label="Item Id" />
                     <vue-excel-column field="trial"   label="Trial" />
                 </vue-excel-editor>
+
+                <div class="card-view">
+                    <ul>
+                        <li class="border-bottom border-top" v-for="stimuli in stimuliList.stimuli" :key="stimuli.id">
+                            <div class="row flex">
+                                <h6>
+                                    <textarea type="text" v-model="stimuli.stimuli_text" @keyup="onDataChange" />
+                                </h6>
+                                <select name="" id="">
+                                    <option value="test">test</option>
+                                    <option value="test2">test 2</option>
+                                    <option value="test3">test 3</option>
+                                </select>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+
+                <!-- <table class="table stimuli-table border-bottom">
+                    <thead>
+                        <th></th>
+                        <th>Stimuli Text</th>
+                        <th>Condition</th>
+                        <th>Condition Code</th>
+                        <th>Item</th>
+                        <th>Item Id</th>
+                        <th>Trial</th>
+                    </thead>
+                    <tbody class="expansible-parent" v-for="stimuli in stimuliList.stimuli" :key="stimuli.id">
+                       
+                        <tr class="main">
+                            <td class="expand" @click="expandListInfo($event)"></td>
+                            <td class="large"><textarea type="text" v-model="stimuli.stimuli_text" @keyup="onDataChange" /></td>
+                            <td><input type="text" v-model="stimuli.condition" @keyup="onDataChange"></td>
+                            <td><input type="text" v-model="stimuli.condition_code" @keyup="onDataChange"></td>
+                            <td><input type="text" v-model="stimuli.item" @keyup="onDataChange"></td>
+                            <td><input type="text" v-model="stimuli.item_id" @keyup="onDataChange"></td>
+                            <td><input type="text" v-model="stimuli.trial" @keyup="onDataChange"></td>
+                        </tr>
+                        <tr class="expansible">
+                            answer will go here
+                        </tr>
+                        
+                    </tbody>
+                </table> -->
 
                 <button :disabled="!listChanged" @click="updateStimuliList" class="px-4 d-block btn btn-primary mt-4">Save</button>
             </div>
@@ -109,6 +163,8 @@
                     trial: ""
                 }];
             }
+            let _this = this;
+            
         },
         methods: {
             updateStimuliList() {
@@ -175,10 +231,9 @@
                 this.listChanged = true;
             },
 
-            expandListInfo() {
-                $(".expansible").slideToggle();
-                $(".modal-header h4 .expand").toggleClass("rotate");
-                $(".modal-header .header-area ").toggleClass("border-bottom");
+            expandListInfo(event) {
+                $(event.target).closest(".expansible-parent").find(".expansible").first().slideToggle();
+                $(event.target).toggleClass("rotate");
             }
         }
     }
@@ -207,8 +262,120 @@
 
         .modal-body {
             
+            // .stimuli-table {
+
+            //     thead {
+            //         th:first-of-type {
+            //             padding-left: 30px;
+            //         }
+            //     }
+            //     tbody {
+
+            //         tr.main {
+            //             td > input, td > textarea {
+            //                 border: none;
+            //                 min-height: 40px;
+            //             }
+
+            //             td {
+            //                 vertical-align: middle;
+            //                 padding: 6px;
+            //                 position: relative;
+
+            //                 input {
+            //                     min-height: 30px;
+            //                 }
+
+            //                 &.expand {
+            //                     background-image: url(/images/down-arrow.png);
+            //                     background-size: 12px;
+            //                     background-position: center;
+            //                     background-repeat: no-repeat;
+            //                     opacity: 0.8;
+            //                     cursor: pointer;
+            //                     transition: 0.4s;
+            //                     &.rotate {
+            //                         transform: rotate(180deg);
+            //                         transition: 0.4s;
+            //                     }
+            //                 }
+            //             }
+            //             td.large {
+            //                 min-width: 360px;
+                            
+            //                 input,textarea {
+            //                     width: 100%;
+            //                 }
+            //             }
+            //         }
+            //     }
+            // }
+
             .modal-header {
                 border: none;
+            }
+
+            .view-filter {
+                span {
+                    width: 18px;
+                    height: 18px;
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    display: inline-block;
+                    border: none;
+                    cursor: pointer;
+
+                        &.card {
+                            background-image: url('/images/view_visual.png');
+                            &.selected {
+                                background-image: url('/images/view_visual_selected.png');
+                                background-color: black;
+                            }
+                        }
+
+                        &.list {
+                            background-image: url('/images/view_list.png');
+
+                            &.selected {
+                                background-image: url('/images/view_list_selected.png');
+                                background-color: black;
+                            }
+                        }
+                }
+            }
+
+            .card-view {
+                ul {
+                    padding: 0;
+                    li {
+                        padding: 15px;
+                        .row {
+
+                            &.flex {
+                                display: flex;
+                                justify-content: space-between;
+                            }
+                            h6 {
+                                margin: 0;
+                                textarea {
+                                    width: 400px;
+                                    max-width: 100%;
+                                    padding: 6px;
+                                }
+                            }
+
+                            select {
+                                    min-width: 120px;
+                                    max-height: 40px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .modal-content {
+                padding-top: 0;
             }
 
             h4 {
@@ -218,12 +385,13 @@
                 input {
                     font-size: 1.35rem;
                     color: black;
+                    border: none;
                 }
 
                 .expand {
                     display: inline-block;
-                    width: 20px;
-                    height: 20px;
+                    width: 14px;
+                    height: 14px;
                     background-image: url('/images/down-arrow.png');
                     background-size: contain;
                     opacity: 0.8;
@@ -244,12 +412,21 @@
                 width: 400px;
                 max-width: 100%;
                 display: none;
+                padding-bottom: 24px;
 
                 input, textarea {
                     margin-bottom: 8px;
                 }
 
             }
+
+            
+
+            // .vue-excel-editor {
+            //     tr td span {
+            //         display: none;
+            //     }
+            // }
         }
     }
     
