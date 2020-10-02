@@ -71,11 +71,11 @@
            <div slot="content">
 
                 <div class="view-filter">
-                    <span class="card selected"></span>
-                    <span class="list"></span>
+                    <span @click="isListView = false" :class="{'selected' : isListView == false }" class="card"></span>
+                    <span @click="isListView = true" :class="{'selected' : isListView == true }" class="list"></span>
                 </div>
 
-                 <vue-excel-editor @update="onDataChange" v-if="stimuliList.stimuli && false" v-model="stimuliList.stimuli" new-if-bottom autocomplete no-footer multi-update enterToSouth>
+                 <vue-excel-editor @update="onDataChange" v-if="stimuliList.stimuli && isListView" v-model="stimuliList.stimuli" new-if-bottom autocomplete no-footer multi-update enterToSouth>
                     <vue-excel-column field="stimuli_text"   label="Stimuli Text" width="400px" />
                     <vue-excel-column field="condition"   label="Condition" />
                     <vue-excel-column field="condition_code"   label="Condition Code" />
@@ -84,7 +84,7 @@
                     <vue-excel-column field="trial"   label="Trial" />
                 </vue-excel-editor>
 
-                <div class="card-view">
+                <div class="card-view" v-else>
                     <ul>
                         <li class="border-bottom border-top" v-for="stimuli in stimuliList.stimuli" :key="stimuli.id">
                             <div class="row flex">
@@ -148,7 +148,8 @@
             return {
                 stimuliList: this.list,
                 showEditModal: false,
-                listChanged: false
+                listChanged: false,
+                isListView: false
             };
         },
         mounted() {
@@ -317,14 +318,15 @@
 
             .view-filter {
                 span {
-                    width: 18px;
-                    height: 18px;
+                    width: 28px;
+                    height: 22px;
                     background-size: contain;
                     background-repeat: no-repeat;
                     background-position: center;
                     display: inline-block;
                     border: none;
                     cursor: pointer;
+                    border-radius: 4px;
 
                         &.card {
                             background-image: url('/images/view_visual.png');
