@@ -29,5 +29,7 @@ Route::get('/experiment/{experiment_id}/edit', 'ExperimentsController@edit')->na
 
 Route::patch('/experiment/{experiment_id}', 'ExperimentsController@update')->name('experiment.update');
 
+Route::get('/fieldtypes', 'FieldTypesController@show');
+
 Route::post('/stimuli', 'StimulisController@store')->middleware('auth');
 

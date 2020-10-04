@@ -23,6 +23,7 @@ window.Vue = require('vue');
 
 Vue.component('modal', require('./components/Modal.vue').default);
 Vue.component('editStimuliList', require('./components/experiments/EditStimuliList.vue').default);
+Vue.component('editStimuli', require('./components/experiments/EditStimuli.vue').default);
 Vue.component('stimuliLists', require('./components/experiments/StimuliLists.vue').default);
 
 import VueExcelEditor from 'vue-excel-editor'

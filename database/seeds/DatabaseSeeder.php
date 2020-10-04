@@ -239,9 +239,39 @@ class DatabaseSeeder extends Seeder
             'created_at' => date("Y-m-d H:i:s") 
         ]);
 
+        DB::table('answer_fields')->insert([
+            'id' => 2,
+            'label' => 'Choose one: ',
+            'placeholder' => '',
+            'field_type_id' => 3,
+            'options' => '["1", "2", "3", "4", "5", "6", "7"]',
+            'created_at' => date("Y-m-d H:i:s") 
+        ]);
+
+        DB::table('answer_fields')->insert([
+            'id' => 3,
+            'label' => 'Type your answer: ',
+            'placeholder' => 'Type...',
+            'field_type_id' => 1,
+            'options' => '',
+            'created_at' => date("Y-m-d H:i:s") 
+        ]);
+
         DB::table('answer_fields_in_stimuli')->insert([
             'answer_field_id' => 1,
             'stimuli_id' => 1,
+            'created_at' => date("Y-m-d H:i:s") 
+        ]);
+
+        DB::table('answer_fields_in_stimuli')->insert([
+            'answer_field_id' => 2,
+            'stimuli_id' => 2,
+            'created_at' => date("Y-m-d H:i:s") 
+        ]);
+
+        DB::table('answer_fields_in_stimuli')->insert([
+            'answer_field_id' => 3,
+            'stimuli_id' => 3,
             'created_at' => date("Y-m-d H:i:s") 
         ]);
 

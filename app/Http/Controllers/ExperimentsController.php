@@ -7,6 +7,8 @@ use App\User;
 use Auth;
 use App\Experiment;
 use App\StimuliList;
+use App\Stimuli;
+use App\AnswerField;
 use App\ListInExperiment;
 use App\CustomClass\ListWithStimuli;
 use Redirect;
@@ -38,8 +40,17 @@ class ExperimentsController extends Controller
             $listWithStimuli = new ListWithStimuli;
             $listWithStimuli->list_info = $list; 
             $listWithStimuli->stimuli = $list->stimulis()->get();
+
+            foreach($listWithStimuli->stimuli as $stimuli) {
+            
+                $theStimuli = Stimuli::find($stimuli->id);
+                $stimuli->answerField = $theStimuli->answerField()->get()->first();
+                $stimuli->answerField->options = json_decode($stimuli->answerField->options);
+            }
+
             array_push($stimuli_lists, $listWithStimuli);
         }
+
 
         // Only authorize if user is the owner of experiment.
         // Check ExperimentPolicy.php

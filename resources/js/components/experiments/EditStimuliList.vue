@@ -87,16 +87,52 @@
                 <div class="card-view" v-else>
                     <ul>
                         <li class="border-bottom border-top" v-for="stimuli in stimuliList.stimuli" :key="stimuli.id">
-                            <div class="row flex">
+                            
+                            <!-- <edit-stimuli :stimuli="stimuli" :fieldTypes="fieldTypes" /> -->
+                            <div class="row pb-3">
                                 <h6>
                                     <textarea type="text" v-model="stimuli.stimuli_text" @keyup="onDataChange" />
                                 </h6>
-                                <select name="" id="">
-                                    <option value="test">test</option>
-                                    <option value="test2">test 2</option>
-                                    <option value="test3">test 3</option>
+                            </div>
+
+                            <div class="row mt-3">
+                                <select id="fieldTypes" v-if="fieldTypes && stimuli.answerField" v-model="stimuli.answerField.field_type_id">
+                                    <option  v-for="fieldType in fieldTypes" :selected="stimuli.answerField && stimuli.answerField.field_type_id == fieldType.id" :key="fieldType.id"  :value="fieldType.id">{{fieldType.field_type_name}}</option>
                                 </select>
                             </div>
+
+                            <div class="row mt-3 d-block">
+                                <template v-if="stimuli.answerField && stimuli.answerField.options && ([3,4,'3','4'].includes(stimuli.answerField.field_type_id))">
+                                    <div v-for="(option, index) in stimuli.answerField.options" :key="index">
+                                        <input :type="[4,'4'].includes(stimuli.answerField.field_type_id) ? 'radio' : 'checkbox'" :name="stimuli.answerField.label">
+                                        <input 
+                                            class="mb-2 border-0 border-top-0 border-left-0 border-right-0"
+                                            @change="onDataChange()"
+                                            type="text"
+                                            v-bind:placeholder="stimuli.answerField.options[index]" 
+                                            >
+                                    </div>
+                                        
+                                </template>
+
+                                <template v-else>
+
+                                    <input 
+                                        class="d-block border-0"
+                                        @change="onDataChange()"
+                                        type="text" 
+                                        v-model="stimuli.answerField.label">
+
+                                    <input 
+                                        class="d-block mt-2"
+                                        @change="onDataChange()"
+                                        type="text" 
+                                        v-model="stimuli.answerField.placeholder">
+                                </template>
+                            
+                            </div>
+
+
                         </li>
                     </ul>
                 </div>
@@ -149,8 +185,27 @@
                 stimuliList: this.list,
                 showEditModal: false,
                 listChanged: false,
-                isListView: false
+                isListView: false,
+                fieldTypes: null,
+
             };
+        },
+
+        created(){
+            let _this = this;
+
+             axios.post(
+                    '/fieldtypes', {
+                        data: '',
+                        _method: 'GET',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    }
+                ).then(function (response) {
+                    _this.fieldTypes = response.data;
+                })
+                .catch(function (error) {
+                    console.log(error);            
+                });
         },
         mounted() {
             if(!this.stimuliList.stimuli.length) {
@@ -164,7 +219,7 @@
                     trial: ""
                 }];
             }
-            let _this = this;
+            
             
         },
         methods: {

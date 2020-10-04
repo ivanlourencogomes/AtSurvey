@@ -4,8 +4,19 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AnswerFields extends Model
+class AnswerField extends Model
 {
+
+    public function fieldType()
+    {
+        return $this->hasOne('App\FieldType', 'field_type_id');
+    }
+
+    public function stimuli() {
+        return $this->belongsToMany('App\Stimuli', 'answer_fields_in_stimuli', 
+      'stimuli_id', 'answer_field_id');
+    }
+
     /* 
         Setup the json field for options: https://stackoverflow.com/questions/32954424/laravel-migration-array-type-store-array-in-database-column
     
