@@ -103,8 +103,15 @@
 
                             <div class="row mt-3 d-block">
                                 <template v-if="stimuli.answerField && stimuli.answerField.options && ([3,4,'3','4'].includes(stimuli.answerField.field_type_id))">
+                                    <input 
+                                        class="d-block border-0"
+                                        @change="onDataChange()"
+                                        type="text" 
+                                        v-model="stimuli.answerField.label">
+                                    
                                     <div v-for="(option, index) in stimuli.answerField.options" :key="index">
                                         <input :type="[4,'4'].includes(stimuli.answerField.field_type_id) ? 'radio' : 'checkbox'" :name="stimuli.answerField.label">
+                                        
                                         <input 
                                             class="mb-2 border-0 border-top-0 border-left-0 border-right-0"
                                             @change="onDataChange()"
