@@ -32,4 +32,5 @@ Route::patch('/experiment/{experiment_id}', 'ExperimentsController@update')->nam
 Route::get('/fieldtypes', 'FieldTypesController@show');
 
 Route::post('/stimuli', 'StimulisController@store')->middleware('auth');
+Route::delete('/stimuli', 'StimulisController@destroy')->middleware('auth');
 

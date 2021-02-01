@@ -18,9 +18,9 @@ class ExperimentsController extends Controller
 
     public function show($experiment_id)
     {
-        
+
         $experiment = Experiment::find($experiment_id);
-        
+
         // Only authorize if user is the owner of experiment or experiment is public.
         // Check ExperimentPolicy.php
         $this->authorize('view', $experiment);
@@ -30,22 +30,25 @@ class ExperimentsController extends Controller
 
     public function edit($experiment_id)
     {
-        
+
         $experiment = Experiment::find($experiment_id);
         $stimuli_lists_raw =  $experiment->stimuli_lists()->get();
         $stimuli_lists = array();
 
         foreach($stimuli_lists_raw as $list) {
-            
+
             $listWithStimuli = new ListWithStimuli;
-            $listWithStimuli->list_info = $list; 
+            $listWithStimuli->list_info = $list;
             $listWithStimuli->stimuli = $list->stimulis()->get();
 
             foreach($listWithStimuli->stimuli as $stimuli) {
-            
+
                 $theStimuli = Stimuli::find($stimuli->id);
-                $stimuli->answerField = $theStimuli->answerField()->get()->first();
-                $stimuli->answerField->options = json_decode($stimuli->answerField->options);
+                if(count($stimuli->answerField)>0){
+                    $stimuli->answerField = $theStimuli->answerField()->get()->first();
+                    $stimuli->answerField->options = json_decode($stimuli->answerField->options);
+                }
+
             }
 
             array_push($stimuli_lists, $listWithStimuli);
@@ -77,9 +80,9 @@ class ExperimentsController extends Controller
         ]);
 
         $data['is_active'] = '1';
-        
+
         auth()->user()->experiment()->create($data);
-        
+
         return redirect('/home');
 
     }
@@ -97,13 +100,13 @@ class ExperimentsController extends Controller
             'is_public' => '',
             'is_active' => ''
         ]);
-        
-        
+
+
         $exp = Experiment::find($experiment_id);
-        
+
         foreach($data as $key => $value)
-        {   
-            $exp[$key] = $value; 
+        {
+            $exp[$key] = $value;
         };
 
         $exp->save();
