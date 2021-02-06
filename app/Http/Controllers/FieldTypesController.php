@@ -13,8 +13,8 @@ class FieldTypesController extends Controller
     public function show()
     {
 
-        return FieldType::all();
-        
+        return FieldType::with("answerField")->get();
+
     }
 
 }

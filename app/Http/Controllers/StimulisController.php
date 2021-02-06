@@ -53,8 +53,13 @@ class StimulisController extends Controller
 
         //SELECT EACH ROW FROM ARRAY AND INSERT OR UPDATE IT
         foreach($stimuli as $s){
+            $id = 0;
+            if(!empty($s["answerField"])){
+                if(!empty($s["answerField"]["pivot"])){
+                    $id = $s["answerField"]["pivot"]["stimuli_id"];
+                }
 
-            $id = !empty($s["answerField"]) ? $s["answerField"]["pivot"]["stimuli_id"] : 0;
+            }
             if($id ===0){
                 $s["stimuli_type_id"] = $stimuli_type_id;
                 $record = auth()->user()->stimuli()->create($s);

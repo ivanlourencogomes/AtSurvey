@@ -8,6 +8,6 @@ class FieldType extends Model
 {
     public function answerField()
     {
-        return $this->belongsToMany('App\AnswerField', 'field_type_id');
+        return $this->hasMany('App\AnswerField', 'field_type_id');
     }
 }

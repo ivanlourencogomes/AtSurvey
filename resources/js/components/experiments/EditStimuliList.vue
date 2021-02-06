@@ -86,14 +86,15 @@
 
                         </vue-excel-editor>
                          <div class="add-record-btn">
-                            <span >+</span> <a  @click="createRecord">Add Stimuli</a>
+                            <span >+</span> <a  @click="createRecord('list')">Add Stimuli</a>
                         </div>
                 </div>
 
                 <div class="card-view" v-else-if="isCardView">
 <ul>
-                        <li class="border-bottom border-top" v-for="stimuli in stimuliList.stimuli" :key="stimuli.id">
-                                <div v-if="stimuli.id">
+                        <li class="border-bottom border-top" v-for="(stimuli,index) in stimuliList.stimuli" :key="stimuli.id">
+                            <span class='delete-icon' @click="deleteCardRecord(stimuli,index)" ></span>
+                                <div v-if="stimuli.id || stimuli.new">
                             <!-- <edit-stimuli :stimuli="stimuli" :fieldTypes="fieldTypes" /> -->
                             <div class="row pb-3">
                                 <h6>
@@ -102,7 +103,7 @@
                             </div>
 
                             <div class="row mt-3">
-                                <select id="fieldTypes" v-if="fieldTypes && stimuli.answerField" v-model="stimuli.answerField.field_type_id">
+                                <select class="fieldTypes" v-if="fieldTypes && stimuli.answerField" v-model="stimuli.answerField.field_type_id" @change = "answerFieldChange(stimuli,$event)">
                                     <option  v-for="fieldType in fieldTypes" :selected="stimuli.answerField && stimuli.answerField.field_type_id == fieldType.id" :key="fieldType.id"  :value="fieldType.id">{{fieldType.field_type_name}}</option>
                                 </select>
                             </div>
@@ -129,11 +130,9 @@
 
                                 <template v-else-if="stimuli.answerField">
 
-                                    <input
-                                        class="d-block border-0"
-                                        @change="onDataChange()"
-                                        type="text"
-                                        v-model="stimuli.answerField.label">
+                                    <label v-text="stimuli.answerField.label">
+
+                                    </label>
 
                                     <input
                                         class="d-block mt-2"
@@ -147,6 +146,9 @@
 
                         </li>
                     </ul>
+                    <div class="add-record-btn">
+                            <span >+</span> <a  @click="createRecord('card')">Add Stimuli</a>
+                        </div>
                 </div>
 
 
@@ -198,7 +200,6 @@
                 showEditModal: false,
                 listChanged: false,
                 isListView: false,
-                fieldTypes: null,
                 isCardView:false,
                 toDelete:[]
             };
@@ -216,11 +217,12 @@
                     }
                 ).then(function (response) {
 
-                    _this.fieldTypes = response.data;
+                    Vue.prototype.fieldTypes = response.data;
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
+
         },
         mounted() {
             console.log("Stumuli",this.stimuliList.stimuli);
@@ -231,6 +233,25 @@
 
         },
         methods: {
+            answerFieldChange(stimuli,e){
+                const selectedValueText = e.target.selectedOptions[0].innerText;
+                //LOOP THORUGH ALL FIELDTYPES AND FIND WHICH ONE IS SELECTED AND THEN POPULATE THE RESPECTIVE OPTIONS
+                Vue.prototype.fieldTypes.forEach(element => {
+                    if(element.field_type_name==selectedValueText){
+                        var options = false;
+                        try{
+                            element.answer_field[0].options = JSON.parse(element.answer_field[0].options);
+
+                        }
+                        catch(err){
+                            console.log(err);
+                        }
+
+                        stimuli.answerField = element.answer_field[0];
+
+                    }
+                });
+            },
             viewChange(type){
                 if(this.stimuliList.stimuli){
                     if(type=="card"){
@@ -308,8 +329,27 @@
                     console.log(error);
                 });
             },
-             createRecord () {
-        const rec = {
+             createRecord (type) {
+                        console.log(type)
+                 if(type=="card"){
+                        console.log(this.stimuliList.stimuli)
+                        var first_field = Vue.prototype.fieldTypes[0];
+                        console.log(first_field)
+                        this.stimuliList.stimuli.push({
+                            answerField:first_field.answer_field[0],
+                            deleteText:"",
+                            condition: "",
+                            condition_code: "",
+                            item: "",
+                            item_id: "",
+                            stimuli_text: "",
+                            stimuli_type_id: "",
+                            trial: "",
+                            new:true
+                        });
+                 }
+                 if(type=="list"){
+                     const rec = {
                     deleteText:"",
                     condition: "",
                     condition_code: "",
@@ -322,8 +362,27 @@
 
         // Call this to new record
         this.$refs.grid.newRecord(rec)
+                 }
+
 
     },
+    deleteCardRecord(stimuli,index){
+        console.log("TO DELETE ROW",stimuli);
+        var deleteConfirm = confirm("Do you really want to delete ?");
+
+            if(deleteConfirm == true){
+                //DELETE THE ROW IF IT's NEWLY CREATED WITHOUT ADDITION TO DB
+                if(stimuli.id == undefined){
+                    console.log("DELETING")
+                        this.stimuliList.stimuli.splice(index,1);
+                }else{
+                this.toDelete.push(stimuli.id);
+               this.stimuliList.stimuli.splice(index,1);
+                }
+                this.listChanged=true;
+            }
+    }
+    ,
     deleteRow(e){
         if(e.target.matches('.delete-icon')){
                 //GET ROW NUMBEr
@@ -522,6 +581,23 @@
                     padding: 0;
                     li {
                         padding: 15px;
+                        span{
+                        &.delete-icon{
+
+                        background-image: url('/images/delete.png');
+                        width: 28px;
+    height: 22px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    border: none;
+    cursor: pointer !important;
+    border-radius: 4px;
+    position: absolute;
+    right: 0;
+                        }
+                        }
                         .row {
 
                             &.flex {
